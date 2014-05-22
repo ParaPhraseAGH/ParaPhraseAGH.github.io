@@ -57,6 +57,51 @@
 <p>In consequence, multi-agent simulations and computations could be easily designed and tested and the same design could then be scaled out along with additional resources to solve harder problems or run bigger simulations.</p>
 
 <h3>
+<a name="how-we-do-this" class="anchor" href="#how-we-do-this"><span class="octicon octicon-link"></span></a>How we do this</h3>
+
+<h4>
+<a name="multi-agent-patterns" class="anchor" href="#multi-agent-patterns"><span class="octicon octicon-link"></span></a>Multi-agent patterns</h4>
+
+<p>We use high-level functional patterns to design multi-agent algorithms in a way similar to the MapReduce model.</p>
+
+<p>The multi-agent system is decomposed into:</p>
+
+<h5>
+<a name="the-mapping-part" class="anchor" href="#the-mapping-part"><span class="octicon octicon-link"></span></a>The mapping part</h5>
+
+<p>which includes:</p>
+
+<ul>
+<li>Agent <strong>state</strong> (and possibly location in spatial simulations)</li>
+<li>Agent <strong>action</strong>
+</li>
+<li>Agent <strong>behaviour</strong>, .i.e. a function of agent state into agent action</li>
+</ul><p><code>behaviour: (State, Location) -&gt; (Action, Location)</code></p>
+
+<p>During the exection of the multi-agent system, agents will repeatedly choose an action to be performed in some location based on their current state and location.</p>
+
+<h5>
+<a name="the-reducing-part" class="anchor" href="#the-reducing-part"><span class="octicon octicon-link"></span></a>The reducing part:</h5>
+
+<p>Agents are repeatedly grouped by similar actions and location. For every such group a <strong>meetings</strong> is performed.
+Meeting are defined as having some given arity - the group of reduced agents is subdivided into smaller groups of that arity and for each such smaller group the meeting function is called, which yields a new sequence of agents as the result of the meeting. </p>
+
+<p><code>meeting: (Action, Location, [State]) -&gt; [(State, Location)]</code></p>
+
+<p>Agents may interact during the meetings or act individually - it follows the arity of the meeting function, which is problem-dependent.</p>
+
+<p>The resulting sequence of agents may contain previous agents with updated state, or new agents. Existing agents may also be dropped from the resulting list, effectively removing them from the system.</p>
+
+<p>The results of the meetings are combined to yield subsequent populations.</p>
+
+<h4>
+<a name="architecture" class="anchor" href="#architecture"><span class="octicon octicon-link"></span></a>Architecture</h4>
+
+<p>A multi-agent simulation is then fully defined by the space of possible agent states, the set of possible actions and a behaviour and meetings functions.</p>
+
+<p>All that remains is to combine these functions to run a multi-agent simulation. We provide several ways to do this. They will be described here soon.</p>
+
+<h3>
 <a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
 <p>2013-2014
