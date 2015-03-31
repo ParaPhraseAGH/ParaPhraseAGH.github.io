@@ -2,9 +2,9 @@
 <html>
 
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="ParaphraseAGH : " />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="ParaphraseAGH : ">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -28,27 +28,29 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a name="welcome-to-the-paraphrase-agh-project" class="anchor" href="#welcome-to-the-paraphrase-agh-project"><span class="octicon octicon-link"></span></a>Welcome to the Paraphrase AGH project.</h3>
+<a id="welcome-to-the-paraphrase-agh-project" class="anchor" href="#welcome-to-the-paraphrase-agh-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to the Paraphrase AGH project.</h3>
 
-<p>The goal of this project is to help creating highly-concurrent multi-agent systems targeted at massively multicore hardware. The Paraphrase AGH project is part of the more general <a href="http://paraphrase-ict.eu/">Paraphrase</a> research project. </p>
+<p>The goal of this project is to help creating highly-concurrent multi-agent systems (MAS) targeted at massively multicore hardware. The Paraphrase AGH project is part of the more general <a href="http://paraphrase-ict.eu/">Paraphrase</a> research project. </p>
 
 <h3>
-<a name="why-we-do-this" class="anchor" href="#why-we-do-this"><span class="octicon octicon-link"></span></a>Why we do this</h3>
+<a id="why-we-do-this" class="anchor" href="#why-we-do-this" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why we do this</h3>
 
 <h4>
-<a name="efficiency" class="anchor" href="#efficiency"><span class="octicon octicon-link"></span></a>Efficiency</h4>
+<a id="efficiency" class="anchor" href="#efficiency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Efficiency</h4>
 
 <p>Most multi-agent software come into two categories:</p>
 
 <ul>
 <li>Heavy-grained agent programming (e.g. Jade), where every agent runs in a separate thread,</li>
 <li>Fine-grained agent simulations (e.g. Netlogo), where the whole agent population is thread-contained.</li>
-</ul><p>The first approach is not efficient in computationally intensive simulations with large numbers of agents. [see TODOpaperRef] The second does not make use of the growing parallel capabilities of modern hardware. </p>
+</ul>
+
+<p>The first approach is not efficient in computationally intensive simulations with large numbers of agents. (<a href="https://www.google.com/books?hl=pl&amp;lr=&amp;id=_TWVAQAAQBAJ&amp;oi=fnd&amp;pg=PA21&amp;dq=Erlang+as+a+High+Performance+Software+Agent+Platform&amp;ots=kX9Bl4in1a&amp;sig=7G_2VYNdKosrzI6r2GODkHJm4ZE">see</a>) The second does not make use of the growing parallel capabilities of modern hardware. </p>
 
 <p>We want to fill the gap and allow fine-grained agent-based simulations and computations which could be run efficiently on massively multicore hardware.</p>
 
 <h4>
-<a name="ease-of-use" class="anchor" href="#ease-of-use"><span class="octicon octicon-link"></span></a>Ease of use</h4>
+<a id="ease-of-use" class="anchor" href="#ease-of-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ease of use</h4>
 
 <p>Writing a concurrent application is hard for most programmers. Writing a concurrent agent simulation is even harder. Moreover, most of the existing software tighly couples the agent programming model to the underlying execution model and parallelism type.</p>
 
@@ -57,17 +59,17 @@
 <p>In consequence, multi-agent simulations and computations could be easily designed and tested and the same design could then be scaled out along with additional resources to solve harder problems or run bigger simulations.</p>
 
 <h3>
-<a name="how-we-do-this" class="anchor" href="#how-we-do-this"><span class="octicon octicon-link"></span></a>How we do this</h3>
+<a id="how-we-do-this" class="anchor" href="#how-we-do-this" aria-hidden="true"><span class="octicon octicon-link"></span></a>How we do this</h3>
 
 <h4>
-<a name="multi-agent-patterns" class="anchor" href="#multi-agent-patterns"><span class="octicon octicon-link"></span></a>Multi-agent patterns</h4>
+<a id="multi-agent-patterns" class="anchor" href="#multi-agent-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Multi-agent patterns</h4>
 
 <p>We use high-level functional patterns to design multi-agent algorithms in a way similar to the MapReduce model.</p>
 
 <p>The multi-agent system is decomposed into:</p>
 
 <h5>
-<a name="the-mapping-part" class="anchor" href="#the-mapping-part"><span class="octicon octicon-link"></span></a>The mapping part</h5>
+<a id="the-mapping-part" class="anchor" href="#the-mapping-part" aria-hidden="true"><span class="octicon octicon-link"></span></a>The mapping part</h5>
 
 <p>which includes:</p>
 
@@ -76,12 +78,14 @@
 <li>Agent <strong>action</strong>
 </li>
 <li>Agent <strong>behaviour</strong>, .i.e. a function of agent state into agent action</li>
-</ul><p><code>behaviour: (State, Location) -&gt; (Action, Location)</code></p>
+</ul>
+
+<p><code>behaviour: (State, Location) -&gt; (Action, Location)</code></p>
 
 <p>During the exection of the multi-agent system, agents will repeatedly choose an action to be performed in some location based on their current state and location.</p>
 
 <h5>
-<a name="the-reducing-part" class="anchor" href="#the-reducing-part"><span class="octicon octicon-link"></span></a>The reducing part:</h5>
+<a id="the-reducing-part" class="anchor" href="#the-reducing-part" aria-hidden="true"><span class="octicon octicon-link"></span></a>The reducing part:</h5>
 
 <p>Agents are repeatedly grouped by similar actions and location. For every such group a <strong>meetings</strong> is performed.
 Meeting are defined as having some given arity - the group of reduced agents is subdivided into smaller groups of that arity and for each such smaller group the meeting function is called, which yields a new sequence of agents as the result of the meeting. </p>
@@ -95,26 +99,72 @@ Meeting are defined as having some given arity - the group of reduced agents is 
 <p>The results of the meetings are combined to yield subsequent populations.</p>
 
 <h4>
-<a name="architecture" class="anchor" href="#architecture"><span class="octicon octicon-link"></span></a>Architecture</h4>
+<a id="architecture" class="anchor" href="#architecture" aria-hidden="true"><span class="octicon octicon-link"></span></a>Architecture</h4>
 
 <p>A multi-agent simulation is then fully defined by the space of possible agent states, the set of possible actions and a behaviour and meetings functions.</p>
 
-<p>All that remains is to combine these functions to run a multi-agent simulation. We provide several ways to do this. They will be described here soon.</p>
+<p>All that remains is to combine these functions to run a multi-agent simulation. We provide several ways to do this, which allows the system to be decomposed as follows:</p>
+
+<p><img src="https://raw.githubusercontent.com/ParaPhraseAGH/ParaPhraseAGH.github.io/ea65ae85a4fbab1d2d7c8480bbf48795e16c6db0/images/architecture.png" alt=""></p>
+
+<p>The top layer is where you define the functions described above, which are problem specific. The bottom layer represents the MAS engine which binds the system together. Several implementations are available, as described in the documentation of the MAS engine subproject (see below).</p>
 
 <h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<a id="project-structure" class="anchor" href="#project-structure" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project structure</h3>
 
-<p>2013-2014
-Daniel Krzywicki
-Jan Stypka
-Piotr Anielski</p>
+<p>This project is divided into several subprojects. </p>
+
+<ul>
+<li><a href="https://github.com/ParaPhraseAGH/erlang-mas">MAS engine</a></li>
+<li><a href="https://github.com/ParaPhraseAGH/erlang-emas">EMAS application</a></li>
+<li>Several EMAS applications: <a href="https://github.com/ParaPhraseAGH/rastrigin-emas">continuous optimization</a> and <a href="https://github.com/ParaPhraseAGH/labs-emas">discrete optimization</a>.</li>
+</ul>
+
+<p>For spatial simulations, a slightly different <a href="https://github.com/ParaPhraseAGH/parallant">MAS simulation engine</a> is available.</p>
+
+<p>The documentation for each of the subprojects is available in the corresponding README files and wikis.</p>
+
+<h3>
+<a id="papers" class="anchor" href="#papers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Papers</h3>
+
+<ol>
+<li><p>Roman Debski,
+SIMULATION-BASED HIGH-PERFORMANCE ALGORITHMS FOR ALPINE SKI RACER’S TRAJECTORY OPTIMIZATION IN HETEROGENEOUS COMPUTER SYSTEMS,
+Int. Journal of Applied Mathematics and Computer Science (accepted).</p></li>
+<li><p>Aleksander Byrski, Marek Kisiel Dorohinicki,
+MEMETIC COMPUTING IN SELECTED AGENT-BASED EVOLUTIONARY SYSTEMS
+Proc of THE 28TH EUROPEAN CONFERENCE ON MODELLING &amp; SIMULATION BRESCIA, ITALY, 27-30 MAY 2014.</p></li>
+<li><p>Daniel Krzywicki, Lukasz Faber, Aleksander Byrski, Marek Kisiel-Dorohinicki
+Computing agents for decision support systems. Future Generation Comp. Syst. 37: 390-400 (2014)</p></li>
+<li><p>Maciej Kazirod, Wojciech Korczynski, Aleksander Byrski
+Agent-oriented computing platform in Python
+Proc of The 2014 IEEE/WIC/ACM International Conference on Intelligent Agent Technology, Warsaw, Poland 11-14 August 2014 (accepted).</p></li>
+<li><p>D. Krzywicki, J. Stypka, P. Anielski,  L. Faber, W. Turek, A. Byrski and M. Kisiel-Dorohinicki
+Generation-free Agent-based Evolutionary Computing
+Proc of Int Conf on Computational Science, Cairns, Australia, 1-12 June 2014.</p></li>
+<li><p>Michal Kowol, Aleksander Byrski and Marek Kisiel-Dorohinicki
+Agent-based Evolutionary Computing for Difficult Discrete Problems
+Proc of Int Conf on Computational Science, Cairns, Australia, 1-12 June 2014.</p></li>
+<li><p>Leszek Siwik, Rafal Drezewski
+Evolutionary Multi-Modal Optimization with the use of Multi-Objective Techniques
+Proc of Int. Conf. on Artificial Intelligence and Soft Computing, Zakopane, Poland June 1-5, 2014.</p></li>
+</ol>
+
+<h3>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+
+<p>2013-2015,
+Daniel Krzywicki,
+Jan Stypka,
+Piotr Anielski,
+Marcin Miszczyk</p>
       </section>
     </div>
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
 
